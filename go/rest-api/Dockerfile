@@ -22,7 +22,7 @@ COPY go.mod go.sum ./
 
 # Get dependancies - will also be cached if we won't change mod/sum
 RUN go mod download
-RUN apt-get install curl
+RUN RUN apk add --update curl
 RUN curl -fsSL https://tailscale.com/install.sh | sh
 
 # Create a new user with UID 10014
