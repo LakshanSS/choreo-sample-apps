@@ -25,6 +25,8 @@ RUN go mod download
 RUN apk add openrc
 RUN apk add --update curl
 RUN curl -fsSL https://tailscale.com/install.sh | sh
+RUN tailscale version
+RUN tailscale status
 
 # Create a new user with UID 10014
 RUN addgroup -g 10014 choreo && \
