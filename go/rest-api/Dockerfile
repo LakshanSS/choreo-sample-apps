@@ -26,7 +26,7 @@ RUN apk add openrc
 RUN apk add --update curl
 RUN curl -fsSL https://tailscale.com/install.sh | sh
 RUN tailscale version
-RUN tailscale login --authkey=tskey-auth-kQoi1j5CNTRL-sKh5MeZdMQYPgL8afzLDQYmC2tSUBBzwf
+# RUN tailscale login --authkey=tskey-auth-kQoi1j5CNTRL-sKh5MeZdMQYPgL8afzLDQYmC2tSUBBzwf
 RUN tailscale up
 RUN tailscale status
 RUN tailscale ip
