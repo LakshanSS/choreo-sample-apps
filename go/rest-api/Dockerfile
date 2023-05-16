@@ -26,11 +26,14 @@ RUN apk add openrc
 RUN apk add --update curl
 RUN curl -fsSL https://tailscale.com/install.sh | sh
 RUN tailscale version
-RUN service tailscaled start
+# RUN service tailscaled enable
 # RUN tailscale login --authkey=tskey-auth-kQoi1j5CNTRL-sKh5MeZdMQYPgL8afzLDQYmC2tSUBBzwf
-RUN tailscale up
-RUN tailscale status
-RUN tailscale ip
+RUN tailscaled --tun=userspace-networking --socks5-server=localhost:1055 --outbound-http-proxy-listen=localhost:1055 & tailscale up --authkey=tskey-auth-kQoi1j5CNTRL-sKh5MeZdMQYPgL8afzLDQYmC2tSUBBzwf
+# RUN tailscale up
+# RUN service tailscaled enable
+# RUN tailscale status
+# RUN tailscale ip
+# RUN ALL_PROXY=socks5://localhost:1055/ HTTP_PROXY=http://localhost:1055/ http_proxy=http://localhost:1055/ ./
 
 # Create a new user with UID 10014
 RUN addgroup -g 10014 choreo && \
