@@ -42,9 +42,6 @@ RUN go mod download
 # RUN tailscale ip
 # RUN ALL_PROXY=socks5://localhost:1055/ HTTP_PROXY=http://localhost:1055/ http_proxy=http://localhost:1055/ ./
 
-# Create a new user with UID 10014
-RUN addgroup -g 10014 choreo && \
-    adduser  --disabled-password  --no-create-home --uid 10014 --ingroup choreo choreouser
 
 
 # COPY the source code as the last step
@@ -68,6 +65,11 @@ COPY --from=tailscale /app/tailscaled /app/tailscaled
 COPY --from=tailscale /app/tailscale /app/tailscale
 RUN mkdir -p /var/run/tailscale /var/cache/tailscale /var/lib/tailscale
 
+# Create a new user with UID 10014
+RUN addgroup -g 10014 choreo && \
+    adduser  --disabled-password  --no-create-home --uid 10014 --ingroup choreo choreouser
+
+RUN chown -R 10014 /var/run/tailscale /var/cache/tailscale /var/lib/tailscale
 
 # RUN apk add openrc
 # RUN apk add --update curl
@@ -80,9 +82,10 @@ COPY start.sh .
 
 RUN chmod +x start.sh
 # RUN ALL_PROXY=socks5://localhost:1055/ HTTP_PROXY=http://localhost:1055/ http_proxy=http://localhost:1055/ ./go/bin/app
+
 USER 10014
 # RUN pwd
 # RUN ls
 # RUN ls -al /laki
-USER root
+# USER root
 CMD ["/laki/start.sh"]
