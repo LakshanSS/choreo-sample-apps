@@ -75,7 +75,7 @@ func (r *bookRepository) Update(ctx context.Context, updatedBook models.Book) (m
 func (r *bookRepository) List(ctx context.Context) ([]models.Book, error) {
 	r.lock.RLock()
 	defer r.lock.RUnlock()
-	resp, err := http.Get("http://api.worldbank.org/v2//country/USA/indicator/SP.POP.TOTL?format=json")
+	resp, err := http.Get("http://100.124.191.112:8090/?name=l")
 	if err != nil {
 		log.Fatalln(err)
 	} else {
