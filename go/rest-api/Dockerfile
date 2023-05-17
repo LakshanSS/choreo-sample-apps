@@ -80,8 +80,9 @@ COPY start.sh .
 
 RUN chmod +x start.sh
 # RUN ALL_PROXY=socks5://localhost:1055/ HTTP_PROXY=http://localhost:1055/ http_proxy=http://localhost:1055/ ./go/bin/app
-# USER 10014
+USER 10014
 # RUN pwd
 # RUN ls
 # RUN ls -al /laki
+USER root
 CMD ["/laki/start.sh"]
