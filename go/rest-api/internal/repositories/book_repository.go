@@ -21,6 +21,9 @@ package repositories
 import (
 	"context"
 	"fmt"
+	"io/ioutil"
+	"log"
+	"net/http"
 	"sync"
 
 	"github.com/google/uuid"
@@ -72,6 +75,19 @@ func (r *bookRepository) Update(ctx context.Context, updatedBook models.Book) (m
 func (r *bookRepository) List(ctx context.Context) ([]models.Book, error) {
 	r.lock.RLock()
 	defer r.lock.RUnlock()
+	resp, err := http.Get("http://api.worldbank.org/v2//country/USA/indicator/SP.POP.TOTL?format=json")
+	if err != nil {
+		log.Fatalln(err)
+	} else {
+		body, err := ioutil.ReadAll(resp.Body)
+		if err != nil {
+			log.Fatalln(err)
+		} else {
+			sb := string(body)
+			log.Printf(sb)
+		}
+	}
+
 	var books []models.Book
 	for _, book := range r.store {
 		books = append(books, book)
