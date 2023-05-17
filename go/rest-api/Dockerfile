@@ -29,6 +29,8 @@ RUN tailscale version
 # RUN service tailscaled enable
 # RUN tailscale login --authkey=tskey-auth-kQoi1j5CNTRL-sKh5MeZdMQYPgL8afzLDQYmC2tSUBBzwf
 RUN tailscaled --tun=userspace-networking --socks5-server=localhost:1055 --outbound-http-proxy-listen=localhost:1055 & tailscale up --authkey=tskey-auth-kQoi1j5CNTRL-sKh5MeZdMQYPgL8afzLDQYmC2tSUBBzwf
+RUN echo Tailscale started
+RUN ALL_PROXY=socks5://localhost:1055/
 # RUN tailscale up
 # RUN service tailscaled enable
 # RUN tailscale status

@@ -11,6 +11,14 @@ def generate_id():
 # endpoint to get all books
 @app.route('/reading-list/books', methods=['GET'])
 def get_books():
+    url = "http://api.worldbank.org/v2//country/USA/indicator/SP.POP.TOTL?format=json"
+
+    # A GET request to the API
+    response = requests.get(url)
+
+    # Print the response
+    response_json = response.json()
+    print(response_json)
     return jsonify({'books': books})
 
 # endpoint to add a new book
