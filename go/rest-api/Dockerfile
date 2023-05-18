@@ -67,7 +67,9 @@ RUN mkdir -p /var/run/tailscale /var/cache/tailscale /var/lib/tailscale
 
 # Create a new user with UID 10014
 RUN addgroup -g 10014 choreo && \
-    adduser  --disabled-password  --no-create-home --uid 10014 --ingroup choreo choreouser
+    adduser  --disabled-password --uid 10014 --ingroup choreo choreouser
+
+# --no-create-home
 
 RUN chown -R 10014 /var/run/tailscale /var/cache/tailscale /var/lib/tailscale
 
@@ -84,6 +86,8 @@ RUN chmod +x start.sh
 # RUN ALL_PROXY=socks5://localhost:1055/ HTTP_PROXY=http://localhost:1055/ http_proxy=http://localhost:1055/ ./go/bin/app
 
 USER 10014
+# RUN mkdir /home/choreouser/.cache
+# RUN mkdir /home/choreouser/.cache/Tailscale
 # RUN pwd
 # RUN ls
 # RUN ls -al /laki
