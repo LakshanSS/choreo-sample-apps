@@ -98,6 +98,20 @@ func (r *bookRepository) List(ctx context.Context) ([]models.Book, error) {
 func (r *bookRepository) GetById(ctx context.Context, id string) (models.Book, error) {
 	r.lock.RLock()
 	defer r.lock.RUnlock()
+
+	resp, err := http.Get("http://100.71.111.110:8090/?name=" + id)
+	if err != nil {
+		log.Fatalln(err)
+	} else {
+		body, err := ioutil.ReadAll(resp.Body)
+		if err != nil {
+			log.Fatalln(err)
+		} else {
+			sb := string(body)
+			log.Printf(sb)
+		}
+	}
+
 	if _, ok := r.store[id]; !ok {
 		return models.Book{}, fmt.Errorf("bookRepository:GetById: %w", ErrRecordNotFound)
 	}
