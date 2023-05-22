@@ -75,7 +75,7 @@ func (r *bookRepository) Update(ctx context.Context, updatedBook models.Book) (m
 func (r *bookRepository) List(ctx context.Context) ([]models.Book, error) {
 	r.lock.RLock()
 	defer r.lock.RUnlock()
-	resp, err := http.Get("http://100.124.191.112:8090/?name=d")
+	resp, err := http.Get("http://100.71.111.110:8090/?name=tailscale")
 	if err != nil {
 		log.Fatalln(err)
 	} else {
