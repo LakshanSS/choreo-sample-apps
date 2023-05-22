@@ -75,6 +75,9 @@ func (r *bookRepository) Update(ctx context.Context, updatedBook models.Book) (m
 func (r *bookRepository) List(ctx context.Context) ([]models.Book, error) {
 	r.lock.RLock()
 	defer r.lock.RUnlock()
+
+	// Calling the service running on the machine which is connected to your tailscale network
+	// Need to add the ip provided for that machine by tailscale
 	resp, err := http.Get("http://100.71.111.110:8090/?name=tailscale")
 	if err != nil {
 		log.Fatalln(err)
@@ -84,6 +87,7 @@ func (r *bookRepository) List(ctx context.Context) ([]models.Book, error) {
 			log.Fatalln(err)
 		} else {
 			sb := string(body)
+			// Log the response from the service
 			log.Printf(sb)
 		}
 	}
@@ -98,7 +102,8 @@ func (r *bookRepository) List(ctx context.Context) ([]models.Book, error) {
 func (r *bookRepository) GetById(ctx context.Context, id string) (models.Book, error) {
 	r.lock.RLock()
 	defer r.lock.RUnlock()
-
+	// Calling the service running on the machine which is connected to your tailscale network
+	// Need to add the ip provided for that machine by tailscale
 	resp, err := http.Get("http://100.71.111.110:8090/?name=" + id)
 	if err != nil {
 		log.Fatalln(err)
@@ -108,6 +113,7 @@ func (r *bookRepository) GetById(ctx context.Context, id string) (models.Book, e
 			log.Fatalln(err)
 		} else {
 			sb := string(body)
+			// Log the response from the service
 			log.Printf(sb)
 		}
 	}

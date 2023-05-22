@@ -31,6 +31,7 @@ COPY . .
 ENV CGO_ENABLED=0 GOOS=linux GOARCH=amd64
 RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -a -installsuffix cgo -o /go/bin/app -buildvcs=false
 
+# Download tailscale
 FROM alpine:latest as tailscale
 RUN mkdir /app
 WORKDIR /app
@@ -47,8 +48,6 @@ RUN mkdir -p /var/run/tailscale /var/cache/tailscale /var/lib/tailscale
 # Create a new user with UID 10014
 RUN addgroup -g 10014 choreo && \
     adduser  --disabled-password --uid 10014 --ingroup choreo choreouser
-
-# --no-create-home
 
 RUN chown -R 10014 /var/run/tailscale /var/cache/tailscale /var/lib/tailscale
 
