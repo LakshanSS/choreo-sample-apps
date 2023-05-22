@@ -22,27 +22,6 @@ COPY go.mod go.sum ./
 
 # Get dependancies - will also be cached if we won't change mod/sum
 RUN go mod download
-# RUN apk add openrc
-# RUN apk add --update curl
-# RUN curl -fsSL https://tailscale.com/install.sh | sh
-
-# ENV TSFILE=tailscale_1.40.1_amd64.tgz
-# RUN wget https://pkgs.tailscale.com/stable/${TSFILE} && \
-# tar xzf ${TSFILE} --strip-components=1
-
-# RUN tailscale version
-# RUN service tailscaled enable
-# RUN tailscale login --authkey=tskey-auth-kQoi1j5CNTRL-sKh5MeZdMQYPgL8afzLDQYmC2tSUBBzwf
-# RUN tailscaled --tun=userspace-networking --socks5-server=localhost:1055 --outbound-http-proxy-listen=localhost:1055 & tailscale up --authkey=tskey-auth-kQoi1j5CNTRL-sKh5MeZdMQYPgL8afzLDQYmC2tSUBBzwf
-# RUN echo Tailscale started
-
-# RUN tailscale up
-# RUN service tailscaled enable
-# RUN tailscale status
-# RUN tailscale ip
-# RUN ALL_PROXY=socks5://localhost:1055/ HTTP_PROXY=http://localhost:1055/ http_proxy=http://localhost:1055/ ./
-
-
 
 # COPY the source code as the last step
 COPY . .
@@ -73,23 +52,12 @@ RUN addgroup -g 10014 choreo && \
 
 RUN chown -R 10014 /var/run/tailscale /var/cache/tailscale /var/lib/tailscale
 
-# RUN apk add openrc
-# RUN apk add --update curl
-# RUN curl -fsSL https://tailscale.com/install.sh | sh
-# RUN tailscale version
-
 RUN mkdir /laki
 WORKDIR /laki
 COPY start.sh .
 
 RUN chmod +x start.sh
-# RUN ALL_PROXY=socks5://localhost:1055/ HTTP_PROXY=http://localhost:1055/ http_proxy=http://localhost:1055/ ./go/bin/app
 
 USER 10014
-# RUN mkdir /home/choreouser/.cache
-# RUN mkdir /home/choreouser/.cache/Tailscale
-# RUN pwd
-# RUN ls
-# RUN ls -al /laki
-# USER root
+
 CMD ["/laki/start.sh"]
